@@ -5,26 +5,13 @@ import {initialState, reducer} from '../reducers/Reducer'
 export default function TodoForm(){
     
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [newItem, setItem] = useState('') 
-
-    function listCall(){
-        return (
-            state.map((item) => {
-                    return (
-                    <div key={item.id}>
-                        <h1>{item.item}</h1>
-                        <p>Completed: {`${item.completed}`}</p>
-                        <button onClick={handleComplete}> Mark Complete</button>
-                    </div>
-                    )})
-        )
-    }
-
+    const [newList, setNewList] = useState(initialState)
+    const [newItem, setItem] = useState('');
 
     const handleSubmit = e => {
         e.preventDefault();
         dispatch({type:'ADD', payload:newItem});
-        return listCall;
+        return setNewList(state);
     }
 
     const handleChanges = e => {
@@ -35,13 +22,9 @@ export default function TodoForm(){
        });
     }
 
-    const handleComplete = e => {
-        function markComplete(k){
-            console.log(k)
-            return k.completed = true;
-        }
-        dispatch({type:'COMPLETE', payload:markComplete(e)});
-        console.log(state);
+
+    const handleComplete = () => {
+        dispatch({type:'COMPLETE'});
     }
 
     return (
@@ -54,12 +37,13 @@ export default function TodoForm(){
 
             <div>
                 {
-                    state.map((item) => {
+                
+                    newList.map(item => {
                     return (
                     <div key={item.id}>
                         <h1>{item.item}</h1>
                         <p>Completed: {`${item.completed}`}</p>
-                        <button type="button" onClick={() => handleComplete(item)}> Mark Complete</button>
+                        <button type="button" onClick={() => handleComplete}> Mark Complete</button>
                     </div>
                     )})
                 

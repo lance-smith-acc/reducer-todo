@@ -22,9 +22,9 @@ export const initialState = [
 export const reducer = (state, action) => {
     switch (action.type) {
         case 'ADD': 
-            return [...state, action.payload]
+            return [...state, action.payload];
         case 'COMPLETE':
-            return [...state, action.payload]
+            return {...state, completed:state.completed.map()};
         case 'CLEAR':
             return {}
         default:
